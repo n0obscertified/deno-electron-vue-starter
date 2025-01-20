@@ -1,0 +1,3 @@
+{
+  "files": ["electron_app/app.ts", "electron_app/preload.ts"]
+} 
