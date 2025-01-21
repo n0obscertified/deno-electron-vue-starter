@@ -1,7 +1,7 @@
 {
   "nodeModulesDir": "auto",
-  "name": "@denoelectron/electronwrapper",
-  "version": "0.0.1",
+  "name": "@denoelectron/newtron",
+  "version": "0.0.2",
   "exports": "./main.ts",
   "license": "MIT",
   "imports": {
