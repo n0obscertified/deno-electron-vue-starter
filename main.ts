@@ -134,7 +134,7 @@ const vite_stdout_reader = (async () => {
       if (text.includes("Local:   http://localhost:3000/")) {
         startElectron();
         // reader.releaseLock();
-        break
+        break;
       }
       if (done) break;
     }
@@ -158,6 +158,19 @@ async function startElectron() {
 
   try {
     const electronProcess = electronCommand.spawn();
+    const reader = electronProcess.stdout.getReader();
+
+    (async () => {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) {
+          break;
+        }
+        const text = new TextDecoder().decode(value);
+        console.log(text);
+      }
+    })();
+
     const { signal, success } = await electronProcess.status;
     if (success) {
       console.debug("Ran Electron to completion");

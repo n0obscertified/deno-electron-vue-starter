@@ -1,74 +1,133 @@
-This is an Electron application bootstrapped with Deno that integrates a Vue.js frontend. Let me break down its key components and functionality:
+```markdown
+# Electron-Deno-Vue Application
 
-### Purpose
-This application creates a desktop application that combines:
-- Electron for the desktop wrapper
-- Vue.js for the frontend UI
-- Deno for the development environment and build tooling
+A desktop application framework combining Electron, Vue.js, and Deno for modern, secure desktop applications.
 
-### Key Features
+## Overview
 
-1. **Development/Production Modes**
-- Supports both development and production environments via `.env` configuration
-- In development mode (`DENO_ENV=development`):
-  - Automatically creates a new Vue project
-  - Runs a development server on port 3000
-  - Enables hot-reloading
-- In production mode:
-  - Builds the Vue application
-  - Serves it on port 2025
+This framework integrates:
+- 🖥️ **Electron** - Desktop application wrapper
+- ⚡ **Vue.js** - Frontend UI framework
+- 🦕 **Deno** - Development environment and build tools
 
-2. **Electron Integration**
-- Creates a desktop window to display the Vue application
-- Enables screen capture capabilities
-- Supports file protocol handling
-- Includes developer tools for debugging
+## Quick Start
 
-3. **Security Features**
-- Implements context isolation
-- Configurable sandbox settings
-- Includes preload scripts for secure IPC communication
+1. Create `.env` file:
+   ```
+   DENO_ENV=development
+   ```
 
-### Main Components
+2. Run the project:
+   ```bash
+   deno run -A main.ts
+   ```
 
-1. **main.ts (Deno Entry Point)**
-- Handles environment setup
-- Manages development/production workflows
-- Spawns necessary processes (Vue development server, Electron)
-- Handles file path management
+## Architecture
+```
+your-project/
+├── electron_app/
+│   ├── app.js
+│   └── preload.cjs
+├── main.ts
+└── .env
+```
 
-2. **app.js (Electron Main Process)**
-- Configures and creates the Electron window
-- Sets up screen capture capabilities
-- Handles application lifecycle events
-- Manages protocol handling for file access
+### Communication Flow
+Vue → Electron → Deno
 
-### Usefulness
+Send messages from Vue to Deno:
+```javascript
+window.api.send('deno', {
+  message: "Hello Deno!",
+  someData: 123
+})
+```
 
-This setup is particularly useful for:
+Messages flow:
+1. ✉️ Vue component sends message
+2. 📨 Electron receives and processes
+3. 📝 Transmitted via stdout
+4. 📥 Captured by Deno process
 
-1. **Cross-Platform Desktop Applications**
-- Allows web developers to create desktop applications using familiar web technologies
-- Provides native OS integration capabilities
+## Development
 
-2. **Modern Development Experience**
-- Combines the security and modern features of Deno
-- Utilizes Vue.js's robust frontend framework
-- Provides hot-reloading in development
+### Debug Tools
+- Deno console logging
+- Electron DevTools (auto-opened)
+- JSON message tracing
 
-3. **Screen Capture Applications**
-- Built-in support for screen and window capture
-- Useful for screen recording or sharing applications
+### Environment Modes
 
-4. **Development Workflow**
-- Automated project setup
-- Integrated development and production environments
-- Easy-to-use build process
+#### Development Mode
+- Auto-creates Vue project
+- Dev server on port 3000
+- Hot-reloading enabled
+- Set via `DENO_ENV=development`
 
-### Target Use Cases
-- Desktop applications requiring modern web technologies
-- Applications needing screen capture capabilities
-- Cross-platform applications with native features
-- Projects requiring secure desktop-web integration
+#### Production Mode
+- Builds Vue application
+- Serves on port 2025
+- Optimized performance
 
-This setup provides a solid foundation for building modern desktop applications with web technologies while maintaining security and providing a good development experience.
+## Core Features
+
+### 🔒 Security
+- Context isolation
+- Configurable sandbox
+- Secure IPC communication
+- Preload script protection
+
+### 🎥 Screen Capture
+- Window capture support
+- Screen recording capable
+- System picker integration
+
+### 🔄 Process Management
+- Automated setup
+- Development workflow
+- Build process integration
+- Resource cleanup
+
+## Component Structure
+
+### Main Process (Deno)
+- Environment configuration
+- Process management
+- Development server
+- Build pipeline
+
+### Electron Process
+- Window management
+- Native OS integration
+- Protocol handling
+- IPC communication
+
+## Use Cases
+
+### Ideal For
+- 🖥️ Cross-platform desktop apps
+- 📹 Screen recording tools
+- 🔒 Secure desktop applications
+- 🌐 Web-desktop hybrid apps
+
+### Target Applications
+- Enterprise desktop tools
+- Media capture software
+- Cross-platform utilities
+- Modern development tools
+
+## Debugging Guide
+
+Watch for messages:
+- Check Deno terminal
+- Monitor Electron DevTools
+- Trace communication flow
+
+## Contributing
+
+[Add contribution guidelines here]
+
+## License
+
+[Add license information here]
+```
